@@ -10,7 +10,7 @@
     <div class="w-full max-w-md px-6">
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-blue-700 mb-2">📚 Library System</h1>
-            <p class="text-gray-600">Silakan login untuk melanjutkan</p>
+            <p class="text-gray-600">Login to continue</p>
         </div>
 
         <div class="bg-white rounded-xl shadow-xl p-8">
@@ -70,9 +70,9 @@
 
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
-                    Belum punya akun? 
+                    Don't have an account? 
                     <a href="{{ route('register') }}" class="text-blue-600 hover:text-blue-700 font-medium">
-                        Daftar disini
+                        Register here
                     </a>
                 </p>
             </div>
