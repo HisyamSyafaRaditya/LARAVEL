@@ -8,7 +8,48 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // MEMBER
+        // Authors table
+        Schema::create('authors', function (Blueprint $table) {
+            $table->char('a_id', 8)->primary();
+            $table->string('a_name', 50);
+            $table->string('a_country', 20);
+            $table->text('a_biography')->nullable();
+        });
+
+        // Categories table
+        Schema::create('categories', function (Blueprint $table) {
+            $table->char('c_id', 8)->primary();
+            $table->string('c_name', 50);
+            $table->text('c_description')->nullable();
+        });
+
+        // Publishers table
+        Schema::create('publishers', function (Blueprint $table) {
+            $table->char('p_id', 8)->primary();
+            $table->string('p_name', 50);
+            $table->string('p_address', 100);
+            $table->string('p_phone', 15);
+        });
+
+        // Books table
+        Schema::create('books', function (Blueprint $table) {
+            $table->char('b_id', 8)->primary();
+            $table->string('b_title', 50);
+            $table->char('b_isbn', 20);
+            $table->date('b_publication_year');
+            $table->integer('b_stock');
+            $table->integer('b_available_stock');
+            $table->text('b_synopsys')->nullable();
+            $table->char('Author_a_id', 8);
+            $table->char('Category_c_id', 8);
+            $table->char('Publisher_p_id', 8);
+
+            $table->foreign('Author_a_id')->references('a_id')->on('authors');
+            $table->foreign('Category_c_id')->references('c_id')->on('categories');
+            $table->foreign('Publisher_p_id')->references('p_id')->on('publishers');
+        });
+
+        // Members table
         Schema::create('members', function (Blueprint $table) {
             $table->char('m_id', 8)->primary();
             $table->string('m_name', 50);
@@ -19,7 +60,7 @@ return new class extends Migration
             $table->string('m_status', 10);
         });
 
-        // STAFF
+        // Staff table
         Schema::create('staff', function (Blueprint $table) {
             $table->char('s_id', 8)->primary();
             $table->string('s_name', 50);
@@ -29,49 +70,7 @@ return new class extends Migration
             $table->date('s_join_date');
         });
 
-        // AUTHOR
-        Schema::create('authors', function (Blueprint $table) {
-            $table->char('a_id', 8)->primary();
-            $table->string('a_name', 50);
-            $table->string('a_country', 20);
-            $table->text('a_biography')->nullable();
-        });
-
-        // PUBLISHER
-        Schema::create('publishers', function (Blueprint $table) {
-            $table->char('p_id', 8)->primary();
-            $table->string('p_name', 50);
-            $table->string('p_address', 100);
-            $table->string('p_phone', 15);
-        });
-
-        // CATEGORY
-        Schema::create('categories', function (Blueprint $table) {
-            $table->char('c_id', 8)->primary();
-            $table->string('c_name', 50);
-            $table->text('c_description')->nullable();
-        });
-
-        // BOOK
-        Schema::create('books', function (Blueprint $table) {
-            $table->char('b_id', 8)->primary();
-            $table->string('b_title', 50);
-            $table->char('b_isbn', 20);
-            $table->date('b_publication_year');
-            $table->integer('b_stock');
-            $table->integer('b_available_stock');
-            $table->text('b_synopsys')->nullable();
-
-            $table->char('Author_a_id', 8);
-            $table->char('Category_c_id', 8);
-            $table->char('Publisher_p_id', 8);
-
-            $table->foreign('Author_a_id')->references('a_id')->on('authors');
-            $table->foreign('Category_c_id')->references('c_id')->on('categories');
-            $table->foreign('Publisher_p_id')->references('p_id')->on('publishers');
-        });
-
-        // LOAN
+        // Loans table
         Schema::create('loans', function (Blueprint $table) {
             $table->char('l_id', 8)->primary();
             $table->dateTime('l_date');
@@ -84,7 +83,7 @@ return new class extends Migration
             $table->foreign('Staff_s_id')->references('s_id')->on('staff');
         });
 
-        // LOAN_BOOK (many-to-many)
+        // Loan_book pivot table
         Schema::create('loan_book', function (Blueprint $table) {
             $table->char('Loan_l_id', 8);
             $table->char('Book_b_id', 8);
@@ -100,10 +99,10 @@ return new class extends Migration
         Schema::dropIfExists('loan_book');
         Schema::dropIfExists('loans');
         Schema::dropIfExists('books');
-        Schema::dropIfExists('categories');
-        Schema::dropIfExists('publishers');
-        Schema::dropIfExists('authors');
         Schema::dropIfExists('staff');
         Schema::dropIfExists('members');
+        Schema::dropIfExists('publishers');
+        Schema::dropIfExists('categories');
+        Schema::dropIfExists('authors');
     }
 };
