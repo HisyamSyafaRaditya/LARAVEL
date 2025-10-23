@@ -30,19 +30,16 @@ class Loan extends Model
 
     public function member()
     {
-        // column name in migration is 'Member_m_id'
         return $this->belongsTo(Member::class, 'Member_m_id', 'm_id');
     }
 
     public function staff()
     {
-        // column name in migration is 'Staff_s_id'
         return $this->belongsTo(Staff::class, 'Staff_s_id', 's_id');
     }
 
     public function books()
     {
-        // pivot table is 'loan_book' with columns 'Loan_l_id' and 'Book_b_id'
         return $this->belongsToMany(Book::class, 'loan_book', 'Loan_l_id', 'Book_b_id');
     }
 
@@ -61,13 +58,13 @@ class Loan extends Model
         return (int)now()->floatDiffInDays($this->l_return_date);
     }
 
-    // Calculate fine (example: 1000 per day)
+    // Calculate fine 
     public function calculateFine($finePerDay = 1000)
     {
         return $this->daysOverdue() * $finePerDay;
     }
 
-    // Helper method untuk generate ID
+    // generate ID
     public static function generateId()
     {
         $lastLoan = self::orderBy('l_id', 'desc')->first();
@@ -79,7 +76,6 @@ class Loan extends Model
         return 'L' . str_pad($newNumber, 7, '0', STR_PAD_LEFT);
     }
 
-    // Scope untuk filter status
     public function scopeBorrowed($query)
     {
         return $query->where('l_status', 'borrowed');

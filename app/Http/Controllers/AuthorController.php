@@ -36,7 +36,9 @@ class AuthorController extends Controller
 
     public function show(Author $author)
     {
-        $author->load('books.category');
+        $author->loadCount('books')
+               ->load(['books.category']);
+
         return view('authors.show', compact('author'));
     }
 

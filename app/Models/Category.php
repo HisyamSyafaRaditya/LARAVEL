@@ -31,7 +31,7 @@ class Category extends Model
         return $this->books()->count();
     }
 
-    // Helper method untuk generate ID
+    // generate ID
     public static function generateId()
     {
         $lastCategory = self::orderBy('c_id', 'desc')->first();

@@ -26,7 +26,6 @@ class PublisherController extends Controller
             'p_phone' => 'nullable|string|max:15',
         ]);
 
-        // Make sure optional fields exist (some DB schemas may not allow NULL)
         $validated['p_address'] = $validated['p_address'] ?? '';
         $validated['p_phone'] = $validated['p_phone'] ?? '';
 

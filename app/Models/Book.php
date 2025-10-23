@@ -49,7 +49,6 @@ class Book extends Model
 
     public function loans()
     {
-        // pivot table is 'loan_book' with columns 'Book_b_id' and 'Loan_l_id'
         return $this->belongsToMany(Loan::class, 'loan_book', 'Book_b_id', 'Loan_l_id');
     }
 
@@ -59,13 +58,12 @@ class Book extends Model
         return $this->b_available_stock > 0;
     }
 
-    // Get borrowed count
     public function borrowedCount()
     {
         return $this->b_stock - $this->b_available_stock;
     }
 
-    // Helper method untuk generate ID
+    // generate ID
     public static function generateId()
     {
         $lastBook = self::orderBy('b_id', 'desc')->first();

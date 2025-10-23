@@ -10,7 +10,6 @@ class LoanBook extends Model
     use HasFactory;
     public $timestamps = false;
 
-    // migration creates table named 'loan_book' with columns 'Loan_l_id' and 'Book_b_id'
     protected $table = 'loan_book';
 
     protected $fillable = [
